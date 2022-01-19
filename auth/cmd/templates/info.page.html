@@ -1,0 +1,70 @@
+{{template "base" .}}
+
+{{define "content"}}
+    {{if .}}
+        <br><br><br>
+        <div class="container replace">
+            <div class="row">
+                <div class="col-sm">
+                
+                    {{if .User}}
+                        <p> Общая информация </p>
+                        {{with .User}}
+                            <p> ИИН: {{.IIN}} <p>
+                            <p> Дата создания пользователя: {{.Ts}} <p>
+                        {{end}}
+                        <p> Счета: </p>
+                        {{if .Wallets}}
+                        {{with .Wallets}}
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Номер счета</th>
+                                    <th scope="col">Баланс</th>
+                                    <th scope="col">Дата создания</th>  
+                                    <th scope="col">Дата последней транзакции</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                
+                                {{range $index, $value := .}}
+                                    <tr>
+                                        <th scope="row">{{inc $index}}</th>
+                                        <td id="transaction">{{.AccountNo}}</td>
+                                        <td>{{.Amount}}</td>
+                                        <td>{{.Ts}}</td>
+                                        <td>{{.UpdatedAt}}<br> <a href="http://localhost:8080/transactions?account={{.AccountNo}}">Все транзакции </a></td>
+                                    </tr>
+                                {{end}}
+                                </tbody>
+                                </table> 
+                        {{end}}
+                        {{else}}
+                            <div class="container replace">
+                                <div class="row">
+                                    <div class="col">
+                                        <p>У вас нет счетов, вы можете создать новый, нажав на кнопку ниже:</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <form id="add" action="">
+                                            <button type="button" onclick="myFunction('add')" class="btn btn-primary">Создать новый счет</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {{end}}
+                    {{else}}
+                    <p>Что-то пошло не так, попробуйте позже<p>   
+                    {{end}}
+                    </div>
+                </div>
+            </div>
+        {{else}}
+        <p>Что-то пошло не так, попробуйте позже<p>   
+        {{end}}
+{{end}}

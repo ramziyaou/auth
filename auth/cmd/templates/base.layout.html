@@ -1,0 +1,133 @@
+{{define "base"}}
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>MyWallet</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
+       
+
+        <style>
+            .btn-outline-secondary {
+                color: aqua;
+                border-color: #6c757d;
+            }
+            .btn-link {
+                border: none;
+                outline: none;
+                background: none;
+                cursor: pointer;
+                color: #0000EE;
+                padding: 0;
+                text-decoration: underline;
+                font-family: inherit;
+                font-size: inherit;
+            }
+            .paraClass {
+                font-size: 3em;
+            }
+
+            .secondClass {
+                color: red;
+            }
+
+            #lastPara {
+                text-decoration: underline;
+            }
+        </style>
+
+    </head>
+
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/info">Инфо</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/topup">Пополнение</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/transfer">Перевод</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ms-auto"> 
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Вход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">Регистрация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Выход</a>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    {{block "content" .}}
+
+    {{end}}
+    <script src="https://unpkg.com/notie"></script>
+    <script type="text/javascript">
+        function myFunction(x) {
+            if (x === undefined) {
+               console.log('undefined')
+               return
+            }
+            let form = document.getElementById(x);
+            const formData = new URLSearchParams();
+            for (const pair of new FormData(form)) {
+                formData.append(pair[0], pair[1]);
+            }
+            let address = "/" + x
+            fetch(address, {
+                method: "post",
+                body: formData,
+                redirect: 'follow',
+            })
+            .then((response) => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if(!(data.ok)) {
+                        notie.alert({
+                            type: "error",
+                            text: data.message,
+                        })
+                    } else {
+                        if (x === 'signup') {
+                            alert(data.message);window.location ='/login';
+                        }
+                        if (x === 'login') {
+                            window.location = '/info';
+                        }
+                        document.getElementsByClassName('replace')[0].innerHTML = data.message;
+                        
+                    }
+            });
+        }
+    </script>
+    {{block "js" .}}
+
+    {{end}}
+
+{{end}}

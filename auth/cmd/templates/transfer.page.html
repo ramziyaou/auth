@@ -1,0 +1,78 @@
+{{template "base" .}}
+
+{{define "content"}}
+    {{$sliceLen := len .}}
+    {{if gt $sliceLen 0}}
+        <br><br><br>
+        <div class="container replace">
+            <div class="row">
+                <div class="col">
+                    {{if eq (index . 0) "shutdown"}}
+                    <p>что-то пошло не так, попробуйте позже<p>
+                    {{else}}
+                    <form id="transfer" action="/transfer" method="post">
+                        <div class="form-group">
+                            <label for="from"> Выберите номер счета</label>
+                            <select id="from" name="from">
+                                {{range $value := .}}
+                                    <option value="{{ $value }}">{{ $value }}</option>
+                                {{end}}
+                            </select>
+                            <br><br>
+                            <label for="to"> Выберите счет получателя</label>
+                            <select id="to" name="to" onchange='checkvalue(this.value)'>
+                                {{range $value := .}}
+                                    <option value="{{ $value }}">{{ $value }}</option>
+                                {{end}}
+                                <option value="-">Ввести другой счет</option>
+                                <input type="text" id="other" name="other" style='display:none'/>                                 
+                            </select>
+                            
+                            <br><br>
+                            <label for="amount">Введите сумму</label>
+                            <input class="form-control"
+                                    id="amount" autocomplete="off" type='text'
+                                    name='amount' required>
+                            <hr>
+                            <input type="button" onclick="myFunction('transfer')" class="btn btn-primary" value="Submit">
+                        </div>
+                    </form>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    {{else}}
+        <br><br><br>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p>У вас нет счетов, вы можете создать новый, нажав на кнопку ниже:</p>
+                </div>
+            </div>
+        </div>
+    {{end}}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form action="http://localhost:8080/add" method="post">
+                    <button type="submit" class="btn-link">Создать новый счет</button>
+                </form>
+                <p><a href="http://localhost:8080/topup">Пополнить счет</a></p>
+            </div>
+        </div>
+    </div>
+{{end}}
+
+{{define "js"}}
+    <script>
+        function checkvalue(val)
+        {
+            if(val==="-") {
+            document.getElementById('other').style.display='block';
+            document.getElementById('other').setAttribute("required","");
+            }
+            else
+            document.getElementById('other').style.display='none'; 
+        }
+    </script>
+{{end}}

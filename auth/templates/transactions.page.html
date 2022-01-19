@@ -1,0 +1,64 @@
+{{template "base" .}}
+
+{{define "content"}}
+    {{if .}}
+        <br><br><br>
+        <div class="container replace">
+            <div class="row">
+                <div class="col-sm">
+                    {{if .Error}}
+                        <p> {{.Error}} </p>
+                    {{else}}
+                
+                        {{if .AccountNo}}
+                            <p> Сведения о счете {{.AccountNo}} </p>
+                            <p> Транзакции: </p>
+                            {{if .Transactions}}
+                            {{with .Transactions}}
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Транзакция №</th>
+                                        <th scope="col">Дата</th>
+                                        <th scope="col">Тип</th>
+                                        <th scope="col">Откуда</th>
+                                        <th scope="col">Куда</th>
+                                        <th scope="col">Сумма</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {{range $index, $value := .}}
+                                        <tr>
+                                            <th scope="row">{{inc $index}}</th>
+                                            <td id="transaction">{{.ID}}</td>
+                                            <td>{{.Ts}}</td>
+                                            <td>{{.Type}}</td>
+                                            <td>{{.From}}</td>
+                                            <td>{{.To}}</td>
+                                            <td>{{.Amount}}<br>
+                                        </tr>
+                                    {{end}}
+                                    </tbody>
+                                    </table> 
+                            {{end}}
+                            {{else}}
+                                <div class="container replace">
+                                    <div class="row">
+                                        <div class="col">
+                                        <p>По данному счету транзакций не найдено</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{end}}
+                        {{else}}
+                        <p>Что-то пошло не так, попробуйте позже<p>   
+                        {{end}}
+                    {{end}}
+                        </div>
+                </div>
+            </div>
+        {{else}}
+        <p>Что-то пошло не так, попробуйте позже<p>   
+        {{end}}
+{{end}}

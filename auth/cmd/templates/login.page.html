@@ -1,0 +1,32 @@
+{{template "base" .}}
+
+{{define "content"}}
+<br><br><br>
+    <div class="container replace">
+        <div class="row">
+            <div class="col">
+                <h2>Вход в систему</h2>
+
+                <form id="login" action="">
+                    <div class="form-group mt-3">
+                        <label for="login">Логин</label>
+                        <input class="form-control"
+                            id="login" autocomplete="off" type='text'
+                            name="login" required>
+        
+                        <label for="password">Пароль</label>
+                        <input class="form-control"
+                        
+                                id="password" autocomplete="off" type='password'
+                                name='password' required>
+                    <hr>
+                        <input type="button" onclick="myFunction('login')" class="btn btn-primary" value="Submit">
+                        <br><br>
+                        Для регистрации пройдите по ссылке:
+                        <p><a href="http://localhost:8080/signup">Зарегистрироваться</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}

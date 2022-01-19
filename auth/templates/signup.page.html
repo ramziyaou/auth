@@ -1,0 +1,34 @@
+{{template "base" .}}
+
+{{define "content"}}
+<br><br><br>
+    <div class="container replace">
+        <div class="row">
+            <div class="col">
+                <h2>Регистрация</h2>
+                <form id="signup" action="">
+                    <div class="form-group mt-3">
+                        <label for="iin">ИИН</label>
+                        <input class="form-control"
+                                id="iin" autocomplete="off" type='text'
+                                name='iin' value="" required>
+                
+                        <label for="login">Логин</label>
+                        <input class="form-control"
+                    
+                                id="login" autocomplete="off" type='text'
+                                name='login' value="" required>
+                   
+                        <label for="password">Пароль</label>
+                        <input class="form-control"
+                    
+                                id="password" autocomplete="off" type='password'
+                                name='password' value="" required>
+                    <hr>
+                        <input type="button" onclick="myFunction('signup')" class="btn btn-primary" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}

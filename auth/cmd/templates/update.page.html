@@ -1,0 +1,16 @@
+{{template "base" .}}
+
+{{define "content"}}
+<br><br><br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {{if .}}
+    <p> {{.}}  <p>
+        {{else}}
+        <p>something went wrong</p>>
+        {{end}}
+        </div> 
+    </div> 
+</div>
+{{end}}

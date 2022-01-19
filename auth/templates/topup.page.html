@@ -1,0 +1,55 @@
+{{template "base" .}}
+
+{{define "content"}}
+    {{$sliceLen := len .}}
+    {{if gt $sliceLen 0}}
+        <br><br><br>
+        <div class="container replace">
+            <div class="row">
+                <div class="col">
+                    {{if eq (index . 0) "shutdown"}}
+                    <p>что-то пошло не так, попробуйте позже<p>
+                    {{else}}
+                    <form id="topup" action="">
+                        <div class="form-group">
+                            <label for="accountno"> Выберите номер счета</label>
+                            <select id="accountno" name="accountno">
+                                {{range $value := .}}
+                                    <option value="{{ $value }}">{{ $value }}</option>
+                                {{end}}
+                            </select>
+                            <br><br>
+                            <label for="amount">Введите сумму</label>
+                            <input class="form-control"
+                                    id="amount" autocomplete="off" type='text'
+                                    name='amount' required>
+                            <hr>
+                            <input type="button" onclick="myFunction('topup')" class="btn btn-primary" value="Submit">
+                        </div>
+                    </form>
+                    {{end}}
+                </div>
+            </div>
+    {{else}}
+        <br><br><br>
+        <div class="container replace">
+            <div class="row">
+                <div class="col">
+                    <p>У вас нет счетов, вы можете создать новый, нажав на кнопку ниже:</p>
+                </div>
+            </div>
+        </div>
+    {{end}}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form id="add" action="">
+                    <button type="button" onclick="myFunction('add')" class="btn btn-primary">Создать новый счет</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+{{end}}
+
